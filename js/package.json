@@ -1,0 +1,25 @@
+{
+  "name": "cash-register-node",
+  "version": "1.0.0",
+  "description": "a node version of cash register dojo",
+  "main": "index.js",
+  "repository": "git@github.com:bibobibo/cash-register-node.git",
+  "author": "BIBOBIBO <fxw1988@126.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run test-unit",
+    "test-unit": "mocha --require babel-polyfill --compilers js:babel-register **/*.spec.js"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.5.2",
+    "babel-register": "^6.24.1",
+    "coveralls": "^3.0.0",
+    "mocha": "^3.4.2",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "sinon": "^7.2.3"
+  }
+}
