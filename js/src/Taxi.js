@@ -1,8 +1,9 @@
 class Taxi{
-  constructor(airConditioned, totalKms, peakTime) {
+  constructor(airConditioned, totalKms, peakTime, isShow) {
     this.airConditioned = airConditioned;
     this.totalKms = totalKms;
     this.peakTime = peakTime;
+    this.isShow = isShow
   }
 
   isAirConditioned() {
@@ -15,6 +16,9 @@ class Taxi{
 
   isPeakTime() {
     return this.peakTime;
+  }
+  isShow() {
+  	return this.isShow;
   }
 }
 
