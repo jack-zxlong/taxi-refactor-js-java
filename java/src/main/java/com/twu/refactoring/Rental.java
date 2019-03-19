@@ -6,8 +6,8 @@ public class Rental {
 
     private int daysRented;
 
-    public Rental(Movie movie, int daysRented) {
-        this.movie = movie;
+    public Rental(Movie python, int daysRented) {
+        this.movie = python;
         this.daysRented = daysRented;
     }
 

@@ -1,13 +1,13 @@
 package com.twu.refactoring;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -25,7 +25,7 @@ public class CustomerTest {
 	private Movie trek = new Movie("Star Trek 13.2", Movie.NEW_RELEASE);
 	private Movie wallace = new Movie("Wallace and Gromit", Movie.CHILDRENS);
 
-    @BeforeEach
+    @Before
     public void setUpData(){
        dinsdale.addRental(new Rental (python, 3));
        dinsdale.addRental(new Rental (ran, 1));
@@ -36,8 +36,8 @@ public class CustomerTest {
 
     @Test
     public void shouldOutputEmptyStatement() throws Exception {
-        Customer customer = new Customer("Golden Shark");
-        verifyOutput(customer.statement(), "outputEmpty");
+    	Customer customerMain = new Customer("Golden Shark");
+        verifyOutput(customerMain.statement(), "outputEmpty");
     }
 
     @Test
@@ -50,12 +50,6 @@ public class CustomerTest {
         la.setPriceCode(Movie.REGULAR);
         verifyOutput(dinsdale.statement(), "outputChange");
     }
-
-    /*
-    public void testHtml() throws Exception {
-        verifyOutput("1st Output", "outputHtml", dinsdale.htmlStatement());
-    }
-    */
     	
     protected void verifyOutput(String actualValue, String fileName) throws IOException{
         String filePath = getClass().getClassLoader().getResource(GOLD_PATH + fileName).getPath();

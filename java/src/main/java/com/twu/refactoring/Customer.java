@@ -3,6 +3,10 @@ package com.twu.refactoring;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.twu.refactoring.movie.ChildrensMovie;
+import com.twu.refactoring.movie.NewReleaseMovie;
+import com.twu.refactoring.movie.RegularMovie;
+
 public class Customer {
 
 	private String name;
@@ -26,45 +30,47 @@ public class Customer {
 		Iterator<Rental> rentals = rentalList.iterator();
 		String result = "Rental Record for " + getName() + "\n";
 		while (rentals.hasNext()) {
-			double thisAmount = 0;
 			Rental each = rentals.next();
-
-			// determine amounts for each line
-			switch (each.getMovie().getPriceCode()) {
-			case Movie.REGULAR:
-				thisAmount += 2;
-				if (each.getDaysRented() > 2)
-					thisAmount += (each.getDaysRented() - 2) * 1.5;
-				break;
-			case Movie.NEW_RELEASE:
-				thisAmount += each.getDaysRented() * 3;
-				break;
-			case Movie.CHILDRENS:
-				thisAmount += 1.5;
-				if (each.getDaysRented() > 3)
-					thisAmount += (each.getDaysRented() - 3) * 1.5;
-				break;
-
-			}
-
-			// add frequent renter points
-			frequentRenterPoints++;
-			// add bonus for a two day new release rental
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-					&& each.getDaysRented() > 1)
-				frequentRenterPoints++;
-
-			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t"
-					+ String.valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
-
+			double moviePrice = getMoviePrice(each);
+			totalAmount += moviePrice;
+			frequentRenterPoints = getRenterPoints(each, frequentRenterPoints);
+			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(moviePrice) + "\n";
 		}
-		// add footer lines
+		
 		result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints)
-				+ " frequent renter points";
+		result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
 		return result;
 	}
+	
+	/**
+	 * 获取价格
+	 * @param each 
+	 */
+	private double getMoviePrice(Rental each) {
+		double moviePrice = 0;
+		switch (each.getMovie().getPriceCode()) {
+		case Movie.REGULAR:
+			moviePrice = new RegularMovie().getPrice(each);
+			break;
+		case Movie.NEW_RELEASE:
+			moviePrice = new NewReleaseMovie().getPrice(each);
+			break;
+		case Movie.CHILDRENS:
+			moviePrice = new ChildrensMovie().getPrice(each);
+			break;
 
+		}
+		return moviePrice;
+	}
+	
+	/**
+	 * 获取积分
+	 */
+	private int getRenterPoints(Rental each, int point){
+		point++;
+		if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1) {
+			point++;				
+		}
+		return point;
+	}
 }
