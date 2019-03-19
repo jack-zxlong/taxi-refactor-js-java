@@ -66,5 +66,5 @@ public class Customer {
 				+ " frequent renter points";
 		return result;
 	}
-
+ 
 }
